@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    pads (0.1.0)
+    pads (1.0.0)
       interop (~> 0.3.1)
 
 GEM
