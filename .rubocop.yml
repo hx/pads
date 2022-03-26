@@ -1,13 +1,43 @@
 AllCops:
   TargetRubyVersion: 2.6
+  NewCops: enable
+
+Style/Alias:
+  EnforcedStyle: prefer_alias
+
+Style/BlockDelimiters:
+  Exclude:
+    - spec/**/*_spec.rb
 
 Style/StringLiterals:
   Enabled: true
-  EnforcedStyle: double_quotes
+  EnforcedStyle: single_quotes
 
 Style/StringLiteralsInInterpolation:
   Enabled: true
-  EnforcedStyle: double_quotes
+  EnforcedStyle: single_quotes
 
 Layout/LineLength:
   Max: 120
+
+Layout/HashAlignment:
+  EnforcedColonStyle: table
+  EnforcedHashRocketStyle: table
+
+Lint/AmbiguousBlockAssociation:
+  Enabled: false
+
+Lint/AmbiguousOperator:
+  Enabled: false
+
+Metrics/BlockLength:
+  IgnoredMethods:
+    - describe
+    - it
+
+Metrics/MethodLength:
+  Max: 12
+
+Naming/MethodName:
+  IgnoredPatterns:
+    - !ruby/regexp /^([A-Z][a-z]*)+$/

@@ -1,8 +1,19 @@
 # frozen_string_literal: true
 
-require_relative "pads/version"
+require 'pads/version'
+require 'pads/provider'
+require 'pads/mapper'
+require 'pads/live_array'
 
+# Provide pads to the Pads macOS app.
 module Pads
-  class Error < StandardError; end
-  # Your code goes here...
+  def self.provide(*args)
+    provider = Provider.new(*args)
+    yield provider
+    provider.wait
+  end
+
+  def self.pad(*args, &block)
+    Pad.new *args, &block
+  end
 end
