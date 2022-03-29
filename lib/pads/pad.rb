@@ -31,10 +31,13 @@ module Pads
       new_view
     end
 
-    def pop_view
-      raise 'You cannot pop the top level view' if @view_stack.one?
+    def pop_view(view = self.view)
+      index = @view_stack.index(view)
 
-      change_view { @view_stack.shift }
+      raise ArgumentError, 'The given view is not part of the stack' if index.nil?
+      raise ArgumentError, 'You cannot pop the top level view' if view == @view_stack.last
+
+      change_view { @view_stack.slice! 0..index }
     end
 
     def with_view(new_view = PadView.new)
@@ -42,7 +45,7 @@ module Pads
       push_view new_view
       yield new_view
     ensure
-      pop_view
+      pop_view new_view
     end
 
     def bind_events(source_dispatcher)
