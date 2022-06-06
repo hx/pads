@@ -7,7 +7,15 @@ require 'pads/live_array'
 
 # Provide pads to the Pads macOS app.
 module Pads
-  def self.provide(*args)
+  def self.run(*args, &block)
+    loop do
+      run! *args, &block
+    rescue Errno::ECONNREFUSED
+      sleep 1
+    end
+  end
+
+  def self.run!(*args)
     provider = Provider.new(*args)
     yield provider
     provider.wait
