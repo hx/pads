@@ -66,6 +66,19 @@ module Pads
 
     private
 
+    def method_missing(symbol, *args, &block)
+      view = self.view
+      if view.respond_to? symbol
+        view.__send__ symbol, *args, &block
+      else
+        super
+      end
+    end
+
+    def respond_to_missing?(symbol, *)
+      view.respond_to?(symbol) or super
+    end
+
     def change_view
       view&.delete_observer self
       yield
