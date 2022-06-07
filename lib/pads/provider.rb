@@ -24,6 +24,8 @@ module Pads
       @root.push(*args, &block)
     end
 
+    alias << push
+
     def wait
       @client.wait
     end

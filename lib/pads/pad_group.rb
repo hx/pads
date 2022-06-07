@@ -63,6 +63,8 @@ module Pads
       end
     end
 
+    alias << push
+
     # @return [Array<Pad, PadGroup>]
     def members
       @members.dup
