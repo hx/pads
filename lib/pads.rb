@@ -17,7 +17,7 @@ module Pads
 
   def self.run!(*args)
     provider = Provider.new(*args)
-    yield provider
+    Thread.new { yield provider }
     provider.wait
   end
 
