@@ -2,6 +2,8 @@
 
 require 'pads/observable_pad_state'
 
+require 'set'
+
 module Pads
   # Represents a stackable view of a pad
   class PadView < ObservablePadState
@@ -16,6 +18,7 @@ module Pads
 
       @events = Events::Dispatcher.new
       @button_handlers = []
+      @beats = Set.new.compare_by_identity
 
       @events.on :button_clicked do |event|
         @button_handlers[event.index]&.call
@@ -39,6 +42,23 @@ module Pads
     def button(label, &handler)
       @button_handlers << handler
       self.buttons += [label]
+    end
+
+    def beat(delay, delay_first: false)
+      Thread.new do
+        thread = Thread.current
+        @beats << thread
+        while @beats.include? thread
+          yield self unless delay_first
+          delay_first = false
+          sleep delay
+        end
+      end
+    end
+
+    def cancel_beats
+      @beats.clear
+      self
     end
   end
 end

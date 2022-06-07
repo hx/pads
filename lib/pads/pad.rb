@@ -37,7 +37,9 @@ module Pads
       raise ArgumentError, 'The given view is not part of the stack' if index.nil?
       raise ArgumentError, 'You cannot pop the top level view' if view == @view_stack.last
 
-      change_view { @view_stack.slice! 0..index }
+      indexes = 0..index
+      @view_stack[indexes].each &:cancel_beats
+      change_view { @view_stack.slice! indexes }
     end
 
     def with_view(new_view = PadView.new)
