@@ -20,7 +20,7 @@ Or install it yourself as:
 
 ## Usage
 
-Check the examples.
+Check the [examples](https://github.com/hx/pads-examples).
 
 ## Development
 
